@@ -1,4 +1,8 @@
-﻿using System;
+﻿using LibUsbDotNet;
+using LibUsbDotNet.DeviceNotify;
+using LibUsbDotNet.Main;
+using LibUsbDotNet.WinUsb;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -13,12 +17,82 @@ namespace TinyDisplay
     {
         SettingsManager settingsManager;
         Plugin curPlugin;
+        IDeviceNotifier UsbDeviceNotifier = DeviceNotifier.OpenDeviceNotifier();
+        WinUsbDevice inUsingDevice;
+        UsbEndpointWriter EndpointWriter;
+        UsbEndpointReader EndpointReader;
         public MainForm()
         {
             InitializeComponent();
             settingsManager = new SettingsManager();
         }
+        private void OnDeviceNotifyEvent(object sender, DeviceNotifyEventArgs e)
+        {
+            if (inUsingDevice != null
+                && inUsingDevice.UsbRegistryInfo.SymbolicName.Equals(e.Device.Name)
+                && e.EventType == EventType.DeviceRemoveComplete)
+            {
+                // Current device removed.
+                DeviceDisconnect();
+            }
+            if (inUsingDevice == null && e.EventType == EventType.DeviceArrival)
+                // Need to reload device lise
+                ReloadDeviceList();
+        }
+        /// <summary>
+        /// 打开USB设备
+        /// </summary>
+        /// <param name="usb"></param>
+        private void OpenDevice(WinUsbRegistry usb)
+        {
+            if (usb.Open(out inUsingDevice) && inUsingDevice != null)
+            {
+                // Update controls
+                btn_device_open.Text = "关闭设备";
+                cb_device.Enabled = false;
 
+                IUsbDevice wholeUsbDevice = inUsingDevice as IUsbDevice;
+                if (!ReferenceEquals(wholeUsbDevice, null))
+                {
+                    // Select config #1
+                    wholeUsbDevice.SetConfiguration(1);
+                    // Claim interface #0.
+                    wholeUsbDevice.ClaimInterface(0);
+                }
+                EndpointWriter = inUsingDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
+                EndpointReader = inUsingDevice.OpenEndpointReader(ReadEndpointID.Ep02);
+            }
+        }
+        private void DeviceDisconnect()
+        {
+            EndpointWriter = null;
+            EndpointReader = null;
+            inUsingDevice = null;
+
+            cb_device.Enabled = true;
+            btn_device_open.Text = "打开设备";
+        }
+        private void ReloadDeviceList()
+        {
+            UsbRegDeviceList allDevices = WinUsbDevice.AllDevices;
+
+            cb_device.BeginUpdate();
+            cb_device.Items.Clear();
+            foreach (WinUsbRegistry usbRegistry in allDevices)
+            {
+                if (usbRegistry.Device == null)
+                    continue;
+                int vid = usbRegistry.Vid;
+                int pid = usbRegistry.Pid;
+                string desc = (string)(usbRegistry.DeviceProperties["FriendlyName"].ToString().Length > 0 ? usbRegistry.DeviceProperties["FriendlyName"] : usbRegistry.DeviceProperties["DeviceDesc"]);
+
+                ComboBoxItem item = new ComboBoxItem();
+                item.Text = String.Format("{0:X4}:{1:X4} {2}", vid, pid, desc);
+                item.Tag = usbRegistry;
+                cb_device.Items.Add(item);
+            }
+            cb_device.EndUpdate();
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
             settingsManager.LoadSettings();
@@ -29,6 +103,10 @@ namespace TinyDisplay
             lv_brightness.Text = tbr_setting_brightness.Value.ToString();
             // Reload Plugin List
             ReloadPluginList();
+            // Hook the usb device notifier event
+            UsbDeviceNotifier.OnDeviceNotify += OnDeviceNotifyEvent;
+            // Load Devices
+            ReloadDeviceList();
         }
         private void ReloadPluginList()
         {
@@ -83,7 +161,22 @@ namespace TinyDisplay
 
         private void btn_device_open_Click(object sender, EventArgs e)
         {
-
+            ComboBoxItem item = (ComboBoxItem)cb_device.SelectedItem;
+            if (item == null || item.Tag == null)
+            {
+                MessageBox.Show("Please select a device.");
+                return;
+            }
+            if(inUsingDevice == null)
+            {
+                WinUsbRegistry usb = (WinUsbRegistry)item.Tag;
+                OpenDevice(usb);
+            }
+            else
+            {
+                DeviceDisconnect();
+            }
+            
         }
 
         private void btn_plugin_remove_Click(object sender, EventArgs e)
