@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace TinyDisplay
+namespace PigeonUI
 {
     [Serializable]
     public class Plugin

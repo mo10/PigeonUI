@@ -1,4 +1,4 @@
-﻿namespace TinyDisplay
+﻿namespace PigeonUI
 {
     partial class MainForm
     {
@@ -225,7 +225,7 @@
             // pb_preview
             // 
             this.pb_preview.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pb_preview.BackgroundImage = global::TinyDisplay.Properties.Resources.TransparentMask_16x;
+            this.pb_preview.BackgroundImage = global::PigeonUI.Properties.Resources.TransparentMask_16x;
             this.pb_preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pb_preview.Location = new System.Drawing.Point(63, 30);
             this.pb_preview.Name = "pb_preview";
@@ -262,7 +262,7 @@
             // btn_plugin_url
             // 
             this.btn_plugin_url.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_plugin_url.Image = global::TinyDisplay.Properties.Resources.Home_16x;
+            this.btn_plugin_url.Image = global::PigeonUI.Properties.Resources.Home_16x;
             this.btn_plugin_url.Location = new System.Drawing.Point(227, 20);
             this.btn_plugin_url.Name = "btn_plugin_url";
             this.btn_plugin_url.Size = new System.Drawing.Size(23, 23);
@@ -291,7 +291,7 @@
             // btn_plugin_setting
             // 
             this.btn_plugin_setting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_plugin_setting.Image = global::TinyDisplay.Properties.Resources.Settings_16x;
+            this.btn_plugin_setting.Image = global::PigeonUI.Properties.Resources.Settings_16x;
             this.btn_plugin_setting.Location = new System.Drawing.Point(256, 20);
             this.btn_plugin_setting.Name = "btn_plugin_setting";
             this.btn_plugin_setting.Size = new System.Drawing.Size(23, 23);
@@ -395,7 +395,7 @@
             // btn_plugin_down
             // 
             this.btn_plugin_down.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_plugin_down.Image = global::TinyDisplay.Properties.Resources.GlyphDown_16x;
+            this.btn_plugin_down.Image = global::PigeonUI.Properties.Resources.GlyphDown_16x;
             this.btn_plugin_down.Location = new System.Drawing.Point(118, 310);
             this.btn_plugin_down.Name = "btn_plugin_down";
             this.btn_plugin_down.Size = new System.Drawing.Size(24, 24);
@@ -406,7 +406,7 @@
             // btn_plugin_up
             // 
             this.btn_plugin_up.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_plugin_up.Image = global::TinyDisplay.Properties.Resources.GlyphUp_16x;
+            this.btn_plugin_up.Image = global::PigeonUI.Properties.Resources.GlyphUp_16x;
             this.btn_plugin_up.Location = new System.Drawing.Point(88, 310);
             this.btn_plugin_up.Name = "btn_plugin_up";
             this.btn_plugin_up.Size = new System.Drawing.Size(24, 24);
@@ -426,7 +426,7 @@
             // btn_plugin_add
             // 
             this.btn_plugin_add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_plugin_add.Image = global::TinyDisplay.Properties.Resources.Add_thin_10x_16x;
+            this.btn_plugin_add.Image = global::PigeonUI.Properties.Resources.Add_thin_10x_16x;
             this.btn_plugin_add.Location = new System.Drawing.Point(6, 310);
             this.btn_plugin_add.Name = "btn_plugin_add";
             this.btn_plugin_add.Size = new System.Drawing.Size(24, 24);
@@ -437,7 +437,7 @@
             // btn_plugin_remove
             // 
             this.btn_plugin_remove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_plugin_remove.Image = global::TinyDisplay.Properties.Resources.Remove_thin_10x_16x;
+            this.btn_plugin_remove.Image = global::PigeonUI.Properties.Resources.Remove_thin_10x_16x;
             this.btn_plugin_remove.Location = new System.Drawing.Point(36, 310);
             this.btn_plugin_remove.Name = "btn_plugin_remove";
             this.btn_plugin_remove.Size = new System.Drawing.Size(24, 24);
@@ -531,7 +531,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Image = global::TinyDisplay.Properties.Resources.Save_16x;
+            this.button2.Image = global::PigeonUI.Properties.Resources.Save_16x;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(184, 343);
             this.button2.Name = "button2";
@@ -545,7 +545,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Image = global::TinyDisplay.Properties.Resources.DownloadFile_16x;
+            this.button1.Image = global::PigeonUI.Properties.Resources.DownloadFile_16x;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.Location = new System.Drawing.Point(265, 343);
             this.button1.Name = "button1";

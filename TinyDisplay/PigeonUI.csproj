@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C08A7879-669B-46D4-975D-DF049291FEFC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TinyDisplay</RootNamespace>
-    <AssemblyName>TinyDisplay</AssemblyName>
+    <RootNamespace>PigeonUI</RootNamespace>
+    <AssemblyName>PigeonUI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

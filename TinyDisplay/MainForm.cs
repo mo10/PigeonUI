@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace TinyDisplay
+namespace PigeonUI
 {
     public partial class MainForm : Form
     {
