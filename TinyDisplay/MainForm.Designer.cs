@@ -32,11 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lv_plugins = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.btn_device_open = new System.Windows.Forms.Button();
-            this.cb_device = new System.Windows.Forms.ComboBox();
             this.tbc_control = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lb_status = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lb_fps = new System.Windows.Forms.Label();
@@ -62,14 +60,18 @@
             this.btn_plugin_add = new System.Windows.Forms.Button();
             this.btn_plugin_remove = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cb_setting_brightness_preview = new System.Windows.Forms.CheckBox();
-            this.btn_setting_backcolor = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.lv_brightness = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbr_setting_brightness = new System.Windows.Forms.TrackBar();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pb_splash = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_colorTab1 = new System.Windows.Forms.Button();
+            this.btn_colorTab2 = new System.Windows.Forms.Button();
+            this.btn_colorTab3 = new System.Windows.Forms.Button();
+            this.btn_colorTab4 = new System.Windows.Forms.Button();
             this.tbc_control.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -78,6 +80,7 @@
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbr_setting_brightness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_splash)).BeginInit();
             this.SuspendLayout();
             // 
             // lv_plugins
@@ -95,7 +98,7 @@
             this.lv_plugins.MultiSelect = false;
             this.lv_plugins.Name = "lv_plugins";
             this.lv_plugins.ShowGroups = false;
-            this.lv_plugins.Size = new System.Drawing.Size(136, 286);
+            this.lv_plugins.Size = new System.Drawing.Size(136, 306);
             this.lv_plugins.SmallImageList = this.imageList1;
             this.lv_plugins.TabIndex = 1;
             this.lv_plugins.UseCompatibleStateImageBehavior = false;
@@ -118,37 +121,6 @@
             this.imageList1.Images.SetKeyName(8, "Upload_16x");
             this.imageList1.Images.SetKeyName(9, "ModuleError_16x");
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 12);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "设备列表:";
-            // 
-            // btn_device_open
-            // 
-            this.btn_device_open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_device_open.Location = new System.Drawing.Point(391, 4);
-            this.btn_device_open.Name = "btn_device_open";
-            this.btn_device_open.Size = new System.Drawing.Size(75, 23);
-            this.btn_device_open.TabIndex = 9;
-            this.btn_device_open.Text = "打开设备";
-            this.btn_device_open.UseVisualStyleBackColor = true;
-            this.btn_device_open.Click += new System.EventHandler(this.btn_device_open_Click);
-            // 
-            // cb_device
-            // 
-            this.cb_device.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cb_device.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_device.FormattingEnabled = true;
-            this.cb_device.Location = new System.Drawing.Point(77, 6);
-            this.cb_device.Name = "cb_device";
-            this.cb_device.Size = new System.Drawing.Size(307, 20);
-            this.cb_device.TabIndex = 8;
-            // 
             // tbc_control
             // 
             this.tbc_control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -156,14 +128,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbc_control.Controls.Add(this.tabPage1);
             this.tbc_control.Controls.Add(this.tabPage2);
-            this.tbc_control.Location = new System.Drawing.Point(12, 32);
+            this.tbc_control.Location = new System.Drawing.Point(12, 12);
             this.tbc_control.Name = "tbc_control";
             this.tbc_control.SelectedIndex = 0;
-            this.tbc_control.Size = new System.Drawing.Size(453, 366);
+            this.tbc_control.Size = new System.Drawing.Size(440, 386);
             this.tbc_control.TabIndex = 11;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lb_status);
             this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Controls.Add(this.btn_plugin_down);
             this.tabPage1.Controls.Add(this.btn_plugin_up);
@@ -174,10 +147,22 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(445, 340);
+            this.tabPage1.Size = new System.Drawing.Size(432, 360);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "插件";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lb_status
+            // 
+            this.lb_status.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_status.ForeColor = System.Drawing.Color.Red;
+            this.lb_status.Location = new System.Drawing.Point(159, 331);
+            this.lb_status.Name = "lb_status";
+            this.lb_status.Size = new System.Drawing.Size(258, 23);
+            this.lb_status.TabIndex = 13;
+            this.lb_status.Text = "未连接";
+            this.lb_status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel1
             // 
@@ -194,7 +179,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(291, 298);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(278, 318);
             this.tableLayoutPanel1.TabIndex = 12;
             // 
             // groupBox2
@@ -207,7 +192,7 @@
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.MinimumSize = new System.Drawing.Size(172, 106);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(285, 126);
+            this.groupBox2.Size = new System.Drawing.Size(272, 126);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "实时预览";
@@ -216,7 +201,7 @@
             // 
             this.lb_fps.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lb_fps.AutoSize = true;
-            this.lb_fps.Location = new System.Drawing.Point(61, 15);
+            this.lb_fps.Location = new System.Drawing.Point(55, 15);
             this.lb_fps.Name = "lb_fps";
             this.lb_fps.Size = new System.Drawing.Size(35, 12);
             this.lb_fps.TabIndex = 7;
@@ -227,7 +212,7 @@
             this.pb_preview.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pb_preview.BackgroundImage = global::PigeonUI.Properties.Resources.TransparentMask_16x;
             this.pb_preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pb_preview.Location = new System.Drawing.Point(63, 30);
+            this.pb_preview.Location = new System.Drawing.Point(57, 30);
             this.pb_preview.Name = "pb_preview";
             this.pb_preview.Size = new System.Drawing.Size(160, 80);
             this.pb_preview.TabIndex = 6;
@@ -254,7 +239,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Location = new System.Drawing.Point(3, 135);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(285, 160);
+            this.groupBox1.Size = new System.Drawing.Size(272, 180);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "插件信息";
@@ -263,7 +248,7 @@
             // 
             this.btn_plugin_url.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_plugin_url.Image = global::PigeonUI.Properties.Resources.Home_16x;
-            this.btn_plugin_url.Location = new System.Drawing.Point(227, 20);
+            this.btn_plugin_url.Location = new System.Drawing.Point(214, 20);
             this.btn_plugin_url.Name = "btn_plugin_url";
             this.btn_plugin_url.Size = new System.Drawing.Size(23, 23);
             this.btn_plugin_url.TabIndex = 15;
@@ -292,7 +277,7 @@
             // 
             this.btn_plugin_setting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_plugin_setting.Image = global::PigeonUI.Properties.Resources.Settings_16x;
-            this.btn_plugin_setting.Location = new System.Drawing.Point(256, 20);
+            this.btn_plugin_setting.Location = new System.Drawing.Point(243, 20);
             this.btn_plugin_setting.Name = "btn_plugin_setting";
             this.btn_plugin_setting.Size = new System.Drawing.Size(23, 23);
             this.btn_plugin_setting.TabIndex = 10;
@@ -307,7 +292,7 @@
             this.tb_plugin_desc.Location = new System.Drawing.Point(8, 92);
             this.tb_plugin_desc.Multiline = true;
             this.tb_plugin_desc.Name = "tb_plugin_desc";
-            this.tb_plugin_desc.Size = new System.Drawing.Size(271, 63);
+            this.tb_plugin_desc.Size = new System.Drawing.Size(258, 83);
             this.tb_plugin_desc.TabIndex = 9;
             this.tb_plugin_desc.Text = "none";
             // 
@@ -396,7 +381,7 @@
             // 
             this.btn_plugin_down.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_plugin_down.Image = global::PigeonUI.Properties.Resources.GlyphDown_16x;
-            this.btn_plugin_down.Location = new System.Drawing.Point(118, 310);
+            this.btn_plugin_down.Location = new System.Drawing.Point(118, 330);
             this.btn_plugin_down.Name = "btn_plugin_down";
             this.btn_plugin_down.Size = new System.Drawing.Size(24, 24);
             this.btn_plugin_down.TabIndex = 9;
@@ -407,7 +392,7 @@
             // 
             this.btn_plugin_up.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_plugin_up.Image = global::PigeonUI.Properties.Resources.GlyphUp_16x;
-            this.btn_plugin_up.Location = new System.Drawing.Point(88, 310);
+            this.btn_plugin_up.Location = new System.Drawing.Point(88, 330);
             this.btn_plugin_up.Name = "btn_plugin_up";
             this.btn_plugin_up.Size = new System.Drawing.Size(24, 24);
             this.btn_plugin_up.TabIndex = 8;
@@ -427,7 +412,7 @@
             // 
             this.btn_plugin_add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_plugin_add.Image = global::PigeonUI.Properties.Resources.Add_thin_10x_16x;
-            this.btn_plugin_add.Location = new System.Drawing.Point(6, 310);
+            this.btn_plugin_add.Location = new System.Drawing.Point(6, 330);
             this.btn_plugin_add.Name = "btn_plugin_add";
             this.btn_plugin_add.Size = new System.Drawing.Size(24, 24);
             this.btn_plugin_add.TabIndex = 3;
@@ -438,7 +423,7 @@
             // 
             this.btn_plugin_remove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btn_plugin_remove.Image = global::PigeonUI.Properties.Resources.Remove_thin_10x_16x;
-            this.btn_plugin_remove.Location = new System.Drawing.Point(36, 310);
+            this.btn_plugin_remove.Location = new System.Drawing.Point(36, 330);
             this.btn_plugin_remove.Name = "btn_plugin_remove";
             this.btn_plugin_remove.Size = new System.Drawing.Size(24, 24);
             this.btn_plugin_remove.TabIndex = 4;
@@ -447,9 +432,13 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.cb_setting_brightness_preview);
-            this.tabPage2.Controls.Add(this.btn_setting_backcolor);
+            this.tabPage2.Controls.Add(this.btn_colorTab4);
+            this.tabPage2.Controls.Add(this.btn_colorTab3);
+            this.tabPage2.Controls.Add(this.btn_colorTab2);
+            this.tabPage2.Controls.Add(this.btn_colorTab1);
             this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.pb_splash);
+            this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.lv_brightness);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.tbr_setting_brightness);
@@ -458,47 +447,15 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(432, 410);
+            this.tabPage2.Size = new System.Drawing.Size(432, 360);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "固件设定";
+            this.tabPage2.Text = "设置";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // cb_setting_brightness_preview
-            // 
-            this.cb_setting_brightness_preview.AutoSize = true;
-            this.cb_setting_brightness_preview.Checked = true;
-            this.cb_setting_brightness_preview.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_setting_brightness_preview.Location = new System.Drawing.Point(214, 41);
-            this.cb_setting_brightness_preview.Name = "cb_setting_brightness_preview";
-            this.cb_setting_brightness_preview.Size = new System.Drawing.Size(72, 16);
-            this.cb_setting_brightness_preview.TabIndex = 8;
-            this.cb_setting_brightness_preview.Text = "实时预览";
-            this.cb_setting_brightness_preview.UseVisualStyleBackColor = true;
-            // 
-            // btn_setting_backcolor
-            // 
-            this.btn_setting_backcolor.BackColor = System.Drawing.Color.Black;
-            this.btn_setting_backcolor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btn_setting_backcolor.Location = new System.Drawing.Point(71, 6);
-            this.btn_setting_backcolor.Name = "btn_setting_backcolor";
-            this.btn_setting_backcolor.Size = new System.Drawing.Size(21, 21);
-            this.btn_setting_backcolor.TabIndex = 4;
-            this.btn_setting_backcolor.UseVisualStyleBackColor = false;
-            this.btn_setting_backcolor.Click += new System.EventHandler(this.btn_setting_backcolor_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 10);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 12);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "背景颜色:";
             // 
             // lv_brightness
             // 
             this.lv_brightness.AutoSize = true;
-            this.lv_brightness.Location = new System.Drawing.Point(71, 42);
+            this.lv_brightness.Location = new System.Drawing.Point(71, 136);
             this.lv_brightness.Name = "lv_brightness";
             this.lv_brightness.Size = new System.Drawing.Size(11, 12);
             this.lv_brightness.TabIndex = 2;
@@ -507,7 +464,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 42);
+            this.label3.Location = new System.Drawing.Point(6, 136);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 12);
             this.label3.TabIndex = 1;
@@ -517,15 +474,15 @@
             // 
             this.tbr_setting_brightness.BackColor = System.Drawing.Color.White;
             this.tbr_setting_brightness.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbr_setting_brightness.Location = new System.Drawing.Point(88, 33);
+            this.tbr_setting_brightness.Location = new System.Drawing.Point(88, 125);
             this.tbr_setting_brightness.Maximum = 100;
             this.tbr_setting_brightness.Minimum = 10;
             this.tbr_setting_brightness.Name = "tbr_setting_brightness";
-            this.tbr_setting_brightness.Size = new System.Drawing.Size(120, 45);
+            this.tbr_setting_brightness.Size = new System.Drawing.Size(137, 45);
             this.tbr_setting_brightness.SmallChange = 5;
             this.tbr_setting_brightness.TabIndex = 0;
             this.tbr_setting_brightness.TickFrequency = 10;
-            this.tbr_setting_brightness.Value = 55;
+            this.tbr_setting_brightness.Value = 10;
             this.tbr_setting_brightness.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // button2
@@ -533,7 +490,7 @@
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Image = global::PigeonUI.Properties.Resources.Save_16x;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(184, 343);
+            this.button2.Location = new System.Drawing.Point(171, 363);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;
@@ -547,7 +504,7 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Image = global::PigeonUI.Properties.Resources.DownloadFile_16x;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(265, 343);
+            this.button1.Location = new System.Drawing.Point(252, 363);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -555,19 +512,75 @@
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "启动画面";
+            // 
+            // pb_splash
+            // 
+            this.pb_splash.Location = new System.Drawing.Point(65, 6);
+            this.pb_splash.Name = "pb_splash";
+            this.pb_splash.Size = new System.Drawing.Size(160, 80);
+            this.pb_splash.TabIndex = 10;
+            this.pb_splash.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 97);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "调色盘";
+            // 
+            // btn_colorTab1
+            // 
+            this.btn_colorTab1.Location = new System.Drawing.Point(65, 92);
+            this.btn_colorTab1.Name = "btn_colorTab1";
+            this.btn_colorTab1.Size = new System.Drawing.Size(23, 23);
+            this.btn_colorTab1.TabIndex = 12;
+            this.btn_colorTab1.UseVisualStyleBackColor = true;
+            // 
+            // btn_colorTab2
+            // 
+            this.btn_colorTab2.Location = new System.Drawing.Point(94, 92);
+            this.btn_colorTab2.Name = "btn_colorTab2";
+            this.btn_colorTab2.Size = new System.Drawing.Size(23, 23);
+            this.btn_colorTab2.TabIndex = 13;
+            this.btn_colorTab2.UseVisualStyleBackColor = true;
+            // 
+            // btn_colorTab3
+            // 
+            this.btn_colorTab3.Location = new System.Drawing.Point(123, 92);
+            this.btn_colorTab3.Name = "btn_colorTab3";
+            this.btn_colorTab3.Size = new System.Drawing.Size(23, 23);
+            this.btn_colorTab3.TabIndex = 14;
+            this.btn_colorTab3.UseVisualStyleBackColor = true;
+            // 
+            // btn_colorTab4
+            // 
+            this.btn_colorTab4.Location = new System.Drawing.Point(152, 92);
+            this.btn_colorTab4.Name = "btn_colorTab4";
+            this.btn_colorTab4.Size = new System.Drawing.Size(23, 23);
+            this.btn_colorTab4.TabIndex = 15;
+            this.btn_colorTab4.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 410);
+            this.ClientSize = new System.Drawing.Size(464, 410);
             this.Controls.Add(this.tbc_control);
-            this.Controls.Add(this.btn_device_open);
-            this.Controls.Add(this.cb_device);
-            this.Controls.Add(this.label2);
             this.MinimumSize = new System.Drawing.Size(480, 449);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TinyDisplay";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tbc_control.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -581,8 +594,8 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbr_setting_brightness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_splash)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -590,9 +603,6 @@
         private System.Windows.Forms.ListView lv_plugins;
         private System.Windows.Forms.Button btn_plugin_add;
         private System.Windows.Forms.Button btn_plugin_remove;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btn_device_open;
-        private System.Windows.Forms.ComboBox cb_device;
         private System.Windows.Forms.TabControl tbc_control;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -600,8 +610,6 @@
         private System.Windows.Forms.TrackBar tbr_setting_brightness;
         private System.Windows.Forms.Label lv_brightness;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btn_setting_backcolor;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pb_preview;
@@ -624,9 +632,16 @@
         private System.Windows.Forms.Button btn_plugin_setting;
         private System.Windows.Forms.Label lb_plugin_enabled;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox cb_setting_brightness_preview;
         private System.Windows.Forms.Button btn_plugin_url;
         private System.Windows.Forms.Label lb_fps;
+        private System.Windows.Forms.Label lb_status;
+        private System.Windows.Forms.PictureBox pb_splash;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btn_colorTab1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_colorTab4;
+        private System.Windows.Forms.Button btn_colorTab3;
+        private System.Windows.Forms.Button btn_colorTab2;
     }
 }
 

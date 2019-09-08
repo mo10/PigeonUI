@@ -17,8 +17,10 @@ namespace PigeonUI
     {
         SettingsManager settingsManager;
         Plugin curPlugin;
+
+        UsbDeviceFinder MyUsbFinder = new UsbDeviceFinder(0x1209, 0x2700);
         IDeviceNotifier UsbDeviceNotifier = DeviceNotifier.OpenDeviceNotifier();
-        WinUsbDevice inUsingDevice;
+        UsbDevice inUsingDevice;
         UsbEndpointWriter EndpointWriter;
         UsbEndpointReader EndpointReader;
         public MainForm()
@@ -29,28 +31,46 @@ namespace PigeonUI
         private void OnDeviceNotifyEvent(object sender, DeviceNotifyEventArgs e)
         {
             if (inUsingDevice != null
-                && inUsingDevice.UsbRegistryInfo.SymbolicName.Equals(e.Device.Name)
+                && inUsingDevice.UsbRegistryInfo.IsAlive == false
                 && e.EventType == EventType.DeviceRemoveComplete)
             {
                 // Current device removed.
                 DeviceDisconnect();
             }
             if (inUsingDevice == null && e.EventType == EventType.DeviceArrival)
-                // Need to reload device lise
-                ReloadDeviceList();
+                // Try to open device
+                OpenDevice();
+        }
+        private static void OnRxEndPointData(object sender, EndpointDataEventArgs e)
+        {
+            Pigeon_Comm_Data data = Data.DataParse(e.Buffer);
+            if (data.Head == 0x66)
+            {
+                Pigeon_Settings settingss = new Pigeon_Settings();
+                settingss.Brightness = 10;
+                settingss.ProfileIdx = 0;
+                settingss.KeyDef = 3;
+                settingss.RLELen = 615;
+                byte[] a = Data.ToBytes(settingss);
+                Pigeon_Settings settings = Data.ParseDataBodyToStructure<Pigeon_Settings>(e.Buffer);
+                if (settings.Brightness == 1)
+                {
+
+                }
+            }
         }
         /// <summary>
         /// 打开USB设备
         /// </summary>
         /// <param name="usb"></param>
-        private void OpenDevice(WinUsbRegistry usb)
+        private void OpenDevice()
         {
-            if (usb.Open(out inUsingDevice) && inUsingDevice != null)
+            if (inUsingDevice != null)
+                return;
+            // Open Device
+            inUsingDevice = UsbDevice.OpenUsbDevice(MyUsbFinder);
+            if (inUsingDevice != null)
             {
-                // Update controls
-                btn_device_open.Text = "关闭设备";
-                cb_device.Enabled = false;
-
                 IUsbDevice wholeUsbDevice = inUsingDevice as IUsbDevice;
                 if (!ReferenceEquals(wholeUsbDevice, null))
                 {
@@ -61,37 +81,45 @@ namespace PigeonUI
                 }
                 EndpointWriter = inUsingDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
                 EndpointReader = inUsingDevice.OpenEndpointReader(ReadEndpointID.Ep02);
+
+                EndpointReader.DataReceived += (OnRxEndPointData);
+                EndpointReader.DataReceivedEnabled = true;
+                // Update controls
+                lb_status.Text = "已连接";
+                lb_status.ForeColor = Color.Green;
+
+                Pigeon_Comm_Data data = new Pigeon_Comm_Data();
+                data.Head = 0x66;
+                data.Cmd = Pigeon_Comm_Cmd.READ_SETTINGS;
+                data.Len = 0;
+                //
+                byte[] vs = Data.ToBytes(data);
+                // Send to device
+                int bytesWritten;
+                EndpointWriter.Write(vs, 1000, out bytesWritten);
             }
         }
         private void DeviceDisconnect()
         {
+            if (inUsingDevice != null && inUsingDevice.IsOpen)
+            {
+                EndpointReader.DataReceivedEnabled = false;
+                EndpointReader.DataReceived -= (OnRxEndPointData);
+                IUsbDevice wholeUsbDevice = inUsingDevice as IUsbDevice;
+                if (!ReferenceEquals(wholeUsbDevice, null))
+                {
+                    // Release interface #0.
+                    wholeUsbDevice.ReleaseInterface(0);
+                }
+                inUsingDevice.Close();
+            }
             EndpointWriter = null;
             EndpointReader = null;
             inUsingDevice = null;
 
-            cb_device.Enabled = true;
-            btn_device_open.Text = "打开设备";
-        }
-        private void ReloadDeviceList()
-        {
-            UsbRegDeviceList allDevices = WinUsbDevice.AllDevices;
-
-            cb_device.BeginUpdate();
-            cb_device.Items.Clear();
-            foreach (WinUsbRegistry usbRegistry in allDevices)
-            {
-                if (usbRegistry.Device == null)
-                    continue;
-                int vid = usbRegistry.Vid;
-                int pid = usbRegistry.Pid;
-                string desc = (string)(usbRegistry.DeviceProperties["FriendlyName"].ToString().Length > 0 ? usbRegistry.DeviceProperties["FriendlyName"] : usbRegistry.DeviceProperties["DeviceDesc"]);
-
-                ComboBoxItem item = new ComboBoxItem();
-                item.Text = String.Format("{0:X4}:{1:X4} {2}", vid, pid, desc);
-                item.Tag = usbRegistry;
-                cb_device.Items.Add(item);
-            }
-            cb_device.EndUpdate();
+            // Update controls
+            lb_status.Text = "未连接";
+            lb_status.ForeColor = Color.Red;
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -106,7 +134,7 @@ namespace PigeonUI
             // Hook the usb device notifier event
             UsbDeviceNotifier.OnDeviceNotify += OnDeviceNotifyEvent;
             // Load Devices
-            ReloadDeviceList();
+            OpenDevice();
         }
         private void ReloadPluginList()
         {
@@ -157,26 +185,6 @@ namespace PigeonUI
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             lv_brightness.Text = tbr_setting_brightness.Value.ToString();
-        }
-
-        private void btn_device_open_Click(object sender, EventArgs e)
-        {
-            ComboBoxItem item = (ComboBoxItem)cb_device.SelectedItem;
-            if (item == null || item.Tag == null)
-            {
-                MessageBox.Show("Please select a device.");
-                return;
-            }
-            if(inUsingDevice == null)
-            {
-                WinUsbRegistry usb = (WinUsbRegistry)item.Tag;
-                OpenDevice(usb);
-            }
-            else
-            {
-                DeviceDisconnect();
-            }
-            
         }
 
         private void btn_plugin_remove_Click(object sender, EventArgs e)
@@ -274,6 +282,12 @@ namespace PigeonUI
             {
                 System.Diagnostics.Process.Start(curPlugin.Instance.Url);
             }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DeviceDisconnect();
+            UsbDevice.Exit();
         }
     }
 }
