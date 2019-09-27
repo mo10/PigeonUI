@@ -126,7 +126,6 @@ namespace PigeonUI
             settingsManager.LoadSettings();
             settingsManager.LoadPlugins();
             // Load Settings
-            btn_setting_backcolor.BackColor = Color.FromArgb(settingsManager.settings.BKRed, settingsManager.settings.BKGreen, settingsManager.settings.BKBlue);
             tbr_setting_brightness.Value = settingsManager.settings.Brightness;
             lv_brightness.Text = tbr_setting_brightness.Value.ToString();
             // Reload Plugin List
@@ -199,19 +198,6 @@ namespace PigeonUI
                     ReloadPluginList();
                 }
             }
-        }
-
-        private void btn_setting_backcolor_Click(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            // Keeps the user from selecting a custom color.
-            dialog.AllowFullOpen = true;
-            // Sets the initial color select to the current text color.
-            dialog.Color = btn_setting_backcolor.BackColor;
-
-            // Update the text box color if the user clicks OK 
-            if (dialog.ShowDialog() == DialogResult.OK)
-                btn_setting_backcolor.BackColor = dialog.Color;
         }
 
         private void button2_Click(object sender, EventArgs e)
